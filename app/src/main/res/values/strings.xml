@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">MapBoxMarkerTest</string>
+
+    <!-- MapBox Access Token -->
+    <string name="access_token" translatable="false">zzzzzzzzzzzzzzzzzzzzzzzz</string>
+
+    <string name="nyc_union_square_latitude">40.73581</string>
+    <string name="nyc_union_square_longitude">-73.99155</string>
+
+    <string name="montreal_angrignon_latitude">45.441646</string>
+    <string name="montreal_angrignon_longitude">-73.608664</string>
+
+    <string name="boston_harbor_latitude">42.354741</string>
+    <string name="boston_harbor_longitude">-71.049787</string>
+
 </resources>

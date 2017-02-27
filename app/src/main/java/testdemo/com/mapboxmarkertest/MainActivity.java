@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private MapboxMap map;
     private DirectionsRoute currentRoute;
 
-    private MapboxDirections client;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getRoute(Position origin, Position destination) throws ServicesException {
 
-        client = new MapboxDirections.Builder()
+        MapboxDirections client = new MapboxDirections.Builder()
                 .setOrigin(origin)
                 .setDestination(destination)
                 .setProfile(DirectionsCriteria.PROFILE_CYCLING)
@@ -122,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
         client.enqueueCall(new Callback<DirectionsResponse>() {
             @Override
             public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
-                //Log.d(TAG, "Response code: " + response.code());
+                // You can get the generic HTTP info about the response
+                Log.d(TAG, "Response code: " + response.code());
                 if (response.body() == null) {
                     Log.e(TAG, "No routes found, make sure you set the right user and access token.");
                     return;
@@ -131,16 +130,12 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                // get route distance
+                // Print some info about the route
                 currentRoute = response.body().getRoutes().get(0);
-                Double km = currentRoute.getDistance() / 1000;
-                // there may be many digits to the right of the decimal, make it 2
-                DecimalFormat df = new DecimalFormat("#.##");
-                String kilometers = df.format(km);
-
+                Log.d(TAG, "Distance: " + currentRoute.getDistance());
                 Toast.makeText(
                         MainActivity.this,
-                        "Route is " + kilometers + " kilometers",
+                        "Route is " + currentRoute.getDistance() + " meters long.",
                         Toast.LENGTH_SHORT).show();
 
                 // Draw the route on the map
@@ -173,4 +168,33 @@ public class MainActivity extends AppCompatActivity {
                 .width(5));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
 }

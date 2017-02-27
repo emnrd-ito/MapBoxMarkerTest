@@ -65,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
         this.setTitle("Origin: (" + origin.getLatitude() + ", " + origin.getLongitude() + ")  >>  Destination: (" + destination.getLatitude() + ", " + destination.getLongitude() + ")" );
 
+        // Create Icon objects for the marker to use
+        IconFactory iconFactory = IconFactory.getInstance(this);
+        Drawable iconDrawable = ContextCompat.getDrawable(this, R.drawable.green_pin); // pin png is 125x125
+        final Icon greenPinIcon = iconFactory.fromDrawable(iconDrawable);
+        iconDrawable = ContextCompat.getDrawable(this, R.drawable.red_pin); // pin png is 125x125
+        final Icon redPinIcon = iconFactory.fromDrawable(iconDrawable);
+
         // Setup the MapView
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -77,14 +84,18 @@ public class MainActivity extends AppCompatActivity {
                 LatLng originLatLng = (new LatLng(origin.getLatitude(), origin.getLongitude()));
                 mapboxMap.addMarker(new MarkerViewOptions()
                         .position(originLatLng)
+                        //.anchor((float)0.5, (float)1.0) // bottom, middle I think
                         .title("Origin")
-                        .snippet("current location: (" + origin.getLatitude() + ", " + origin.getLongitude() + ")"));
+                        .snippet("current location: (" + origin.getLatitude() + ", " + origin.getLongitude() + ")")
+                        .icon(greenPinIcon)); // custom icon's position is a little off
 
                 LatLng destinationLatLng = (new LatLng(destination.getLatitude(), destination.getLongitude()));
                 mapboxMap.addMarker(new MarkerViewOptions()
                         .position(destinationLatLng)
+                        //.anchor((float)0.5, (float)1.0) // bottom, middle I think
                         .title("Destination")
-                        .snippet("destination: (" + destination.getLatitude() + ", " + destination.getLongitude() + ")"));
+                        .snippet("destination: (" + destination.getLatitude() + ", " + destination.getLongitude() + ")")
+                        .icon(greenPinIcon)); // custom icon's position is a little off
 
                 LatLngBounds latLngBounds = new LatLngBounds.Builder()
                         .include(originLatLng) // Northeast

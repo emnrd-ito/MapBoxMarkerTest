@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         //.anchor((float)0.5, (float)1.0) // bottom, middle I think
                         .title("Destination")
                         .snippet("destination: (" + destination.getLatitude() + ", " + destination.getLongitude() + ")")
-                        .icon(greenPinIcon)); // custom icon's position is a little off
+                        .icon(redPinIcon)); // custom icon's position is a little off
 
                 LatLngBounds latLngBounds = new LatLngBounds.Builder()
                         .include(originLatLng) // Northeast
